@@ -13,7 +13,12 @@ The following table lists the local Docker images available in the `docker-image
 | llama-cpp:server-cuda | docker-images/llama-cpp_server_cuda.tar | Docker image to inference GGUF model using GPU on webui |
 
 ## Load Images into System
+
+Docker images being stored into `./docker-images` and those images can be loaded with following command: 
+
+```shell
 docker load < <docker-image-file-path>
+```
 
 ## Usage
 **Inference with GPU**
