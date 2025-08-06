@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  gguf-inference:
+    build: .
+    container_name: gguf-llm-inference
+    volumes:
+      # Mount local models directory to container
+      - ./models:/app/models:ro
+      # Mount configs directory for configuration files
+      - ./configs:/app/configs:ro
+      # Optional: mount for custom scripts or outputs
+      - ./outputs:/app/outputs
+    environment:
+      # Set number of CPU threads (adjust based on your system)
+      - OMP_NUM_THREADS=4
+      # For GPU support (uncomment if using CUDA)
+      # - CUDA_VISIBLE_DEVICES=0
+    # Uncomment for GPU support
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    
+    # Interactive mode by default - override with command
+    stdin_open: true
+    tty: true
+    
+    # Example command - replace with your model path and preferences
+    command: >
+      python3 inference.py /app/models/your-model.gguf
+      --interactive
+      --n-gpu-layers 0
+      --n-ctx 2048
+      --temperature 0.7
+    
+    # Restart policy
+    restart: unless-stopped
+
+  # Optional: Web interface service (for future enhancement)
+  # gguf-web:
+  #   build: .
+  #   container_name: gguf-web-interface
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./models:/app/models:ro
+  #     - ./configs:/app/configs:ro
+  #   command: python3 web_interface.py
+  #   depends_on:
+  #     - gguf-inference
+
+# Optional: Create named volumes for persistent data
+volumes:
+  models:
+  configs:
+  outputs:
