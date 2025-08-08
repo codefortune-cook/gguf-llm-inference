@@ -1,3 +1,25 @@
+# Recent LLM Inference 
+
+## Install Packages
+
+```sh
+pip install --no-index --find-links=./wheels torch kernels transformers accelerate safetensors bitsandbytes 
+```
+
+## Run Scripts 
+
+```sh
+python inference-scripts/script.py \
+--model ./models/openai/gpt-oss-20b \
+--prompt "Hello, what's your name" 
+```
+
+```sh
+python inference-scripts/script.py \
+--model ./models/openai/gpt-oss-20b \
+--prompt "Hello, what's your name" 
+```
+
 # GGUF & llama.cpp 
 
 This project helps you to inference GGUF models with llama.cpp. 
